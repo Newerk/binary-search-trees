@@ -8,12 +8,13 @@ class Node {
 
 class Tree {
   constructor(array) {
-    this.array = array;
-    this.root = buildTree(array, 0, array.length - 1);
+    this.array = deleteDupe(array.sort((a, b) => a - b));
+    this.root = buildTree(this.array, 0, this.array.length - 1);
   }
 }
 
 function buildTree(array, start, end) {
+
   if (start > end) {
     return null;
   }
@@ -27,8 +28,31 @@ function buildTree(array, start, end) {
   return node;
 }
 
-let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+function deleteDupe(array) {
+  let noDupes = [];
 
-let test = new Tree(arr);
+  array.forEach(el => {
+    if (!noDupes.includes(el)) {
+      noDupes.push(el)
+    }
+  })
 
-console.log(test.root);
+  return noDupes;
+}
+
+
+const prettyPrint = (node, prefix = '', isLeft = true) => {
+  if (node.right !== null) {
+    prettyPrint(node.right, `${prefix}${isLeft ? '│   ' : '    '}`, false);
+  }
+  console.log(`${prefix}${isLeft ? '└── ' : '┌── '}${node.data}`);
+  if (node.left !== null) {
+    prettyPrint(node.left, `${prefix}${isLeft ? '    ' : '│   '}`, true);
+  }
+}
+
+
+
+let unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
+let tree = new Tree(unsortedArr);
+prettyPrint(tree.root);
