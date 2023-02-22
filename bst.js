@@ -1,5 +1,5 @@
 class Node {
-  contructor(data) {
+  constructor(data) {
     this.data = data;
     this.left = null;
     this.right = null;
@@ -7,7 +7,7 @@ class Node {
 }
 
 class Tree {
-  constructor(array){
+  constructor(array) {
     this.array = array;
     this.root = buildTree(array, 0, array.length - 1);
   }
@@ -18,7 +18,7 @@ function buildTree(array, start, end) {
     return null;
   }
 
-  let mid = (start + end / 2);
+  let mid = Math.round((start + end) / 2);
   let node = new Node(array[mid]);
 
   node.left = buildTree(array, start, mid - 1);
@@ -26,3 +26,9 @@ function buildTree(array, start, end) {
 
   return node;
 }
+
+let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+
+let test = new Tree(arr);
+
+console.log(test.root);
