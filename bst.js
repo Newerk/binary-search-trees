@@ -11,6 +11,51 @@ class Tree {
     this.array = deleteDupe(array.sort((a, b) => a - b));
     this.root = buildTree(this.array, 0, this.array.length - 1);
   }
+
+  insert(value) {
+
+  }
+
+  delete(value) {
+
+  }
+
+  find(value) {
+
+  }
+
+  levelOrder(callback) {
+
+  }
+
+  inorder(callback) {
+
+  }
+
+  preorder(callback) {
+
+  }
+
+  postorder(callback) {
+
+  }
+
+  height(node) {
+
+  }
+
+  depth(node) {
+
+  }
+
+  isBalanced() {
+
+  }
+
+  rebalance() {
+
+  }
+
 }
 
 function buildTree(array, start, end) {
