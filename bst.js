@@ -48,13 +48,6 @@ class Tree {
       if (root.left !== null && root.right !== null) { //two children
         console.log('two children');
 
-        let storeRight = root.right;
-        let storeLeft = root.left;
-
-        root = getLeftMostLeaf(storeRight);
-        console.log('should be 9: ' + root.data)
-
-
         const removeLeftMost = (node, value = root.data) => {
           if (node.left === null && node.right === null) {
             node = null;
@@ -68,8 +61,28 @@ class Tree {
 
         }
 
+        let storeRight = root.right;
+        let storeLeft = root.left;
+
+
+        //figure out how to manipulate this.root to return instead when it is equal to the value
+        if (this.root.data === root.data) {
+          this.root = root;
+
+          this.root = getLeftMostLeaf(storeRight);
+
+          this.root.right = removeLeftMost(storeRight);
+          this.root.left = storeLeft;
+
+          return this.root;
+
+        }
+
+        root = getLeftMostLeaf(storeRight);
+
         root.right = removeLeftMost(storeRight);
         root.left = storeLeft;
+
 
         return root;
 
@@ -197,7 +210,11 @@ let tree = new Tree(unsortedArr);
 tree.insert(33);
 
 tree.delete(8);
+tree.delete(8);//code breaks if I remove the root node more than once
+
 
 prettyPrint(tree.root);
+
+
 
 
