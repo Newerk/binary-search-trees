@@ -12,8 +12,20 @@ class Tree {
     this.root = buildTree(this.array, 0, this.array.length - 1);
   }
 
-  insert(value) {
+  insert(value, root = this.root) {
+    if (root === null) {
+      root = new Node(value);
+      return root;
 
+    } else {
+      if (value < root.data) {
+        root.left = this.insert(value, root.left);
+      }
+      if (value > root.data) {
+        root.right = this.insert(value, root.right);
+      }
+      return root;
+    }
   }
 
   delete(value) {
@@ -112,9 +124,9 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 }
 
 
-
 let unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let tree = new Tree(unsortedArr);
-// prettyPrint(tree.root);
 
-tree.find(0);
+tree.insert(33);
+
+prettyPrint(tree.root)
