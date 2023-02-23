@@ -28,7 +28,34 @@ class Tree {
     }
   }
 
-  delete(value) {
+  delete(value, root = this.root) {
+    if (value === root.data) {
+      if (root.left === null && root.right === null) { //no children
+        console.log('no children')
+        
+      }
+
+      if ((root.left === null && root.right !== null) ||
+       (root.left !== null && root.right == null)) { //one child
+        console.log('one child')
+
+      }
+
+      if (root.left !== null && root.right !== null) { //two children
+        console.log('two chilren')
+
+      }
+
+      
+    } else {
+      if (value < root.data) {
+        return this.delete(value, root.left);
+      }
+      if (value > root.data) {
+        return this.delete(value, root.right);
+      }
+
+    }
 
   }
 
@@ -129,4 +156,4 @@ let tree = new Tree(unsortedArr);
 
 tree.insert(33);
 
-prettyPrint(tree.root)
+prettyPrint(tree.root);
