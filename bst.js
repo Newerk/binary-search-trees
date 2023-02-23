@@ -46,11 +46,33 @@ class Tree {
       }
 
       if (root.left !== null && root.right !== null) { //two children
-        console.log('two chilren');
+        console.log('two children');
 
-        //write a function that get the left most node of the first right child of the deleted node.
-          //the return value from this function will be assigned to the deleted root location, and have the 
-          //right child be equal to the first right of the deleted nose
+        let storeRight = root.right;
+        let storeLeft = root.left;
+
+        root = getLeftMostLeaf(storeRight);
+        console.log('should be 9: ' + root.data)
+
+
+        const removeLeftMost = (node, value = root.data) => {
+          if (node.left === null && node.right === null) {
+            node = null;
+            return node;
+          } else {
+            if (value < node.data) {
+              node.left = removeLeftMost(node.left)
+            }
+            return node;
+          }
+
+        }
+
+        root.right = removeLeftMost(storeRight);
+        root.left = storeLeft;
+
+        return root;
+
       }
 
 
@@ -135,6 +157,16 @@ function buildTree(array, start, end) {
   return node;
 }
 
+function getLeftMostLeaf(root) {
+  if (root.left === null && root.right === null) {
+    return root;
+
+  } else {
+    return getLeftMostLeaf(root.left)
+  }
+
+}
+
 function deleteDupe(array) {
   let noDupes = [];
 
@@ -163,12 +195,9 @@ let unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let tree = new Tree(unsortedArr);
 
 tree.insert(33);
-tree.insert(6);
 
-
-prettyPrint(tree.root);
-
-tree.delete(4);
+tree.delete(8);
 
 prettyPrint(tree.root);
+
 
