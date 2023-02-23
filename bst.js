@@ -29,31 +29,39 @@ class Tree {
   }
 
   delete(value, root = this.root) {
-    if (value === root.data) {
+    if (value === root.data || root === null) {
       if (root.left === null && root.right === null) { //no children
-        console.log('no children')
-        
+        console.log('no children');
+        root = null;
+        return root;
+
       }
 
       if ((root.left === null && root.right !== null) ||
-       (root.left !== null && root.right == null)) { //one child
-        console.log('one child')
+        (root.left !== null && root.right == null)) { //one child
+        console.log('one child');
+        root = root.left;
+        return root;
 
       }
 
       if (root.left !== null && root.right !== null) { //two children
-        console.log('two chilren')
+        console.log('two chilren');
 
+        //write a function that get the left most node of the first right child of the deleted node.
+          //the return value from this function will be assigned to the deleted root location, and have the 
+          //right child be equal to the first right of the deleted nose
       }
 
-      
+
     } else {
       if (value < root.data) {
-        return this.delete(value, root.left);
+        root.left = this.delete(value, root.left);
       }
       if (value > root.data) {
-        return this.delete(value, root.right);
+        root.right = this.delete(value, root.right);
       }
+      return root;
 
     }
 
@@ -155,5 +163,12 @@ let unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let tree = new Tree(unsortedArr);
 
 tree.insert(33);
+tree.insert(6);
+
 
 prettyPrint(tree.root);
+
+tree.delete(4);
+
+prettyPrint(tree.root);
+
