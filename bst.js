@@ -20,7 +20,22 @@ class Tree {
 
   }
 
-  find(value) {
+  find(value, root = this.root) {
+    try {
+      if (root.data === value) {
+        console.log(root);
+        return root;
+      } else {
+        if (value < root.data) {
+          return this.find(value, root.left);
+        }
+        if (value > root.data) {
+          return this.find(value, root.right);
+        }
+      }
+    } catch (error) {
+      console.log('value does not exist');
+    }
 
   }
 
@@ -100,4 +115,6 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 
 let unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let tree = new Tree(unsortedArr);
-prettyPrint(tree.root);
+// prettyPrint(tree.root);
+
+tree.find(0);
