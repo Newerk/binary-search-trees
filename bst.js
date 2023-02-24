@@ -31,8 +31,6 @@ class Tree {
   delete(value, root = this.root) {
     if (root.data === value) {
       if (root.left !== null && root.right !== null) {
-        console.log(`has left AND right child`);
-
         if (value === this.root.data) {
           let leftMost = getLeftMostLeaf(this.root.right).data;
           this.delete(leftMost);
@@ -48,13 +46,11 @@ class Tree {
       }
 
       if (root.left === null && root.right === null) {
-        console.log(`has no children`)
         root = null;
         return root;
       }
 
       if (root.left !== null || root.right !== null) {
-        console.log(`has one child`)
         if (root.right === null) {
           root = root.left;
         } else {
@@ -65,11 +61,9 @@ class Tree {
 
     } else {
       if (value < root.data) {
-        console.log('move left')
         root.left = this.delete(value, root.left);
 
       } else {
-        console.log('move right')
         root.right = this.delete(value, root.right);
       }
       return root;
@@ -79,7 +73,6 @@ class Tree {
   find(value, root = this.root) {
     try {
       if (root.data === value) {
-        console.log(root);
         return root;
       } else {
         if (value < root.data) {
@@ -90,13 +83,30 @@ class Tree {
         }
       }
     } catch (error) {
-      console.log('value does not exist');
     }
 
   }
 
-  levelOrder(callback) {
+  levelOrder(root = this.root, callback) {
+    if (root === null) {
+      return;
+    }
 
+    let queue = [root];
+    let output = [root.data]
+
+    while (queue.length > 0) {
+      if (queue[0].left !== null) {
+        output.push(queue[0].left.data)
+        queue.push(queue[0].left)
+      }
+      if (queue[0].right !== null) {
+        output.push(queue[0].right.data)
+        queue.push(queue[0].right)
+      }
+      queue.shift();
+    }
+    return output;
   }
 
   inorder(callback) {
@@ -159,7 +169,6 @@ function buildTree(array, start, end) {
 
 function getLeftMostLeaf(root) {
   if (root.left === null) {
-    console.log(JSON.stringify(root))
     return root;
 
   } else {
@@ -199,13 +208,11 @@ tree.insert(33);
 tree.insert(2);
 
 
-tree.delete(8);//code breaks if I remove the root node more than once
+tree.delete(8);
 tree.delete(9);
 tree.delete(23);
 
-
-
-
+console.log(tree.levelOrder())
 
 prettyPrint(tree.root);
 
