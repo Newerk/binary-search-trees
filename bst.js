@@ -29,75 +29,43 @@ class Tree {
   }
 
   delete(value, root = this.root) {
-    if (value === root.data || root === null) {
-      if (root.left === null && root.right === null) { //no children
-        console.log('no children');
+    if (root.data === value) {
+      if (root.left !== null && root.right !== null) {
+        console.log(`has left AND right child`);
+        let leftMost = getLeftMostLeaf(root.right).data;
+        this.delete(leftMost);
+        root.data = leftMost;
+        return root;
+
+      }
+
+      if (root.left === null && root.right === null) {
+        console.log(`has no children`)
         root = null;
         return root;
-
       }
 
-      if ((root.left === null && root.right !== null) ||
-        (root.left !== null && root.right == null)) { //one child
-        console.log('one child');
-        root = root.left;
-        return root;
-
-      }
-
-      if (root.left !== null && root.right !== null) { //two children
-        console.log('two children');
-
-        const removeLeftMost = (node, value = root.data) => {
-          if (node.left === null && node.right === null) {
-            node = null;
-            return node;
-          } else {
-            if (value < node.data) {
-              node.left = removeLeftMost(node.left)
-            }
-            return node;
-          }
-
+      if (root.left !== null || root.right !== null) {
+        console.log(`has one child`)
+        if (root.right === null) {
+          root = root.left;
+        } else {
+          root = root.right;
         }
-
-        let storeRight = root.right;
-        let storeLeft = root.left;
-
-
-        //figure out how to manipulate this.root to return instead when it is equal to the value
-        if (this.root.data === root.data) {
-
-          this.root = getLeftMostLeaf(storeRight);
-          this.root.right = removeLeftMost(storeRight);
-          this.root.left = storeLeft;
-
-          return this.root;
-
-        }
-
-        root = getLeftMostLeaf(storeRight);
-        root.right = removeLeftMost(storeRight);
-        root.left = storeLeft;
-
-
         return root;
-
-
       }
-
 
     } else {
       if (value < root.data) {
+        console.log('move left')
         root.left = this.delete(value, root.left);
-      }
-      if (value > root.data) {
+
+      } else {
+        console.log('move right')
         root.right = this.delete(value, root.right);
       }
       return root;
-
     }
-
   }
 
   find(value, root = this.root) {
@@ -220,10 +188,11 @@ let unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
 let tree = new Tree(unsortedArr);
 
 tree.insert(33);
+tree.insert(2);
 
-tree.delete(67);
+
 tree.delete(8);//code breaks if I remove the root node more than once
-// tree.delete(9);//code breaks if I remove the root node more than once
+// tree.delete(9);
 
 
 
