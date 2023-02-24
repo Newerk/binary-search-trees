@@ -67,10 +67,8 @@ class Tree {
 
         //figure out how to manipulate this.root to return instead when it is equal to the value
         if (this.root.data === root.data) {
-          this.root = root;
 
           this.root = getLeftMostLeaf(storeRight);
-
           this.root.right = removeLeftMost(storeRight);
           this.root.left = storeLeft;
 
@@ -79,12 +77,12 @@ class Tree {
         }
 
         root = getLeftMostLeaf(storeRight);
-
         root.right = removeLeftMost(storeRight);
         root.left = storeLeft;
 
 
         return root;
+
 
       }
 
@@ -126,15 +124,28 @@ class Tree {
   }
 
   inorder(callback) {
+    if (callback !== null) {
+      this.inorder(callback.left);
+      //add value to array
+      this.inorder(callback.right);
+    }
 
   }
 
   preorder(callback) {
-
+    if (callback !== null) {
+      //add value to array
+      this.preorder(callback);
+      this.preorder(callback);
+    }
   }
 
   postorder(callback) {
-
+    if (callback !== null) {
+      this.postorder(callback);
+      this.postorder(callback);
+      //add value to array
+    }
   }
 
   height(node) {
@@ -172,6 +183,7 @@ function buildTree(array, start, end) {
 
 function getLeftMostLeaf(root) {
   if (root.left === null && root.right === null) {
+    console.log(JSON.stringify(root))
     return root;
 
   } else {
@@ -209,8 +221,11 @@ let tree = new Tree(unsortedArr);
 
 tree.insert(33);
 
-tree.delete(8);
+tree.delete(67);
 tree.delete(8);//code breaks if I remove the root node more than once
+// tree.delete(9);//code breaks if I remove the root node more than once
+
+
 
 
 prettyPrint(tree.root);
