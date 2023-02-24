@@ -32,11 +32,19 @@ class Tree {
     if (root.data === value) {
       if (root.left !== null && root.right !== null) {
         console.log(`has left AND right child`);
-        let leftMost = getLeftMostLeaf(root.right).data;
-        this.delete(leftMost);
-        root.data = leftMost;
-        return root;
 
+        if (value === this.root.data) {
+          let leftMost = getLeftMostLeaf(this.root.right).data;
+          this.delete(leftMost);
+          this.root.data = leftMost;
+          return this.root;
+
+        } else {
+          let leftMost = getLeftMostLeaf(root.right).data;
+          this.delete(leftMost);
+          root.data = leftMost;
+          return root;
+        }
       }
 
       if (root.left === null && root.right === null) {
@@ -150,7 +158,7 @@ function buildTree(array, start, end) {
 }
 
 function getLeftMostLeaf(root) {
-  if (root.left === null && root.right === null) {
+  if (root.left === null) {
     console.log(JSON.stringify(root))
     return root;
 
@@ -192,7 +200,9 @@ tree.insert(2);
 
 
 tree.delete(8);//code breaks if I remove the root node more than once
-// tree.delete(9);
+tree.delete(9);
+tree.delete(23);
+
 
 
 
