@@ -88,6 +88,14 @@ class Tree {
   }
 
   levelOrder(root = this.root, callback) {
+    if (callback) {//if function is provided, execute function on each node
+      if (root === null) {
+        return callback(root);
+      } else {
+        callback(root.left);
+        callback(root.right)
+      }
+    }
     if (root === null) {
       return;
     }
@@ -107,30 +115,42 @@ class Tree {
       queue.shift();
     }
     return output;
-  }
-
-  inorder(callback) {
-    if (callback !== null) {
-      this.inorder(callback.left);
-      //add value to array
-      this.inorder(callback.right);
-    }
 
   }
 
-  preorder(callback) {
-    if (callback !== null) {
-      //add value to array
-      this.preorder(callback);
-      this.preorder(callback);
+  inorder(root = this.root, array = [], callback) {
+    if (root === null) {
+      return array;
+    } else {
+      this.inorder(root.left, array, callback);
+      array.push(root.data);
+      this.inorder(root.right, array, callback);
+
+      return array;
     }
   }
 
-  postorder(callback) {
-    if (callback !== null) {
-      this.postorder(callback);
-      this.postorder(callback);
-      //add value to array
+  preorder(root = this.root, array = [], callback) {
+    if (root === null) {
+      return array;
+    } else {
+      array.push(root.data);
+      this.preorder(root.left, array, callback);
+      this.preorder(root.right, array, callback);
+
+      return array;
+    }
+  }
+
+  postorder(root = this.root, array = [], callback) {
+    if (root === null) {
+      return array;
+    } else {
+      this.postorder(root.left, array, callback);
+      this.postorder(root.right, array, callback);
+      array.push(root.data);
+
+      return array;
     }
   }
 
@@ -212,7 +232,11 @@ tree.delete(8);
 tree.delete(9);
 tree.delete(23);
 
-console.log(tree.levelOrder())
+// console.log(tree.levelOrder())
+console.log(`inorder: ${tree.inorder()}`)
+console.log(`preorder: ${tree.preorder()}`)
+console.log(`postorder: ${tree.postorder()}`)
+
 
 prettyPrint(tree.root);
 
