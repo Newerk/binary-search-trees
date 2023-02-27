@@ -154,8 +154,17 @@ class Tree {
     }
   }
 
-  height(node) {
+  height(node, height = 0, paths = []) {
+    if (node !== null) {
+      this.height(node.left, height + 1, paths);
+      this.height(node.right, height + 1, paths);
 
+      if (node.left === null && node.right === null) {
+        paths.push(height);
+      }
+
+      return Math.max(...paths);
+    }
   }
 
   depth(node) {
@@ -233,13 +242,13 @@ tree.delete(9);
 tree.delete(23);
 
 // console.log(tree.levelOrder())
-console.log(`inorder: ${tree.inorder()}`)
-console.log(`preorder: ${tree.preorder()}`)
-console.log(`postorder: ${tree.postorder()}`)
+// console.log(`inorder: ${tree.inorder()}`)
+// console.log(`preorder: ${tree.preorder()}`)
+// console.log(`postorder: ${tree.postorder()}`)
 
+console.log(tree.height(tree.root))
 
 prettyPrint(tree.root);
-
 
 
 
