@@ -168,7 +168,13 @@ class Tree {
   }
 
   depth(node) {
-
+    if (node === null) {
+      return 0;
+    }
+    let left = this.depth(node.left);
+    let right = this.depth(node.right);
+    
+    return 1 + Math.max(left, right);
   }
 
   isBalanced() {
@@ -247,6 +253,8 @@ tree.delete(23);
 // console.log(`postorder: ${tree.postorder()}`)
 
 console.log(tree.height(tree.root))
+console.log('depth: ' + tree.depth(tree.root))
+
 
 prettyPrint(tree.root);
 
