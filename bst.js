@@ -101,7 +101,7 @@ class Tree {
     }
 
     let queue = [root];
-    let output = [root.data]
+    let output = [root.data];
 
     while (queue.length > 0) {
       if (queue[0].left !== null) {
@@ -173,12 +173,19 @@ class Tree {
     }
     let left = this.depth(node.left);
     let right = this.depth(node.right);
-    
+
     return 1 + Math.max(left, right);
   }
 
   isBalanced() {
+    if (this.root === null) {
+      return;
+    }
+    let leftH = this.height(this.root.left)
+    let rightH = this.height(this.root.right)
+    let difference = (leftH > rightH) ? leftH - rightH : rightH - leftH;
 
+    return (difference > 1) ? false : true;
   }
 
   rebalance() {
@@ -254,6 +261,8 @@ tree.delete(23);
 
 console.log(tree.height(tree.root))
 console.log('depth: ' + tree.depth(tree.root))
+
+console.log(tree.isBalanced());
 
 
 prettyPrint(tree.root);
