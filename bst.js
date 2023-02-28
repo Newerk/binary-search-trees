@@ -245,37 +245,58 @@ const prettyPrint = (node, prefix = '', isLeft = true) => {
 }
 
 
-let unsortedArr = [1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324];
-let tree = new Tree(unsortedArr);
+//TYING IT ALL TOGETHER
+function driverScript() {
+  const getRandomInt = (min, max) => {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min) + min);
+  }
 
-tree.insert(33);
-tree.insert(2);
+  let array = [];
+  let randomArraySize = getRandomInt(3, 30);
 
+  for (let i = 0; i < randomArraySize; i++) {
+    array.push(getRandomInt(0, 9999))
+  }
 
-tree.delete(8);
-tree.delete(9);
-tree.delete(23);
+  let tree = new Tree(array);
 
-//making tree unbalanced
-tree.delete(324);
-tree.delete(6345);
+  console.log(`The Tree is Balanced: ${tree.isBalanced()}`)
+  prettyPrint(tree.root);
+  console.log(`traversal orders {
+    preorder: ${tree.preorder()},
+    postorder: ${tree.postorder()},
+    inorder: ${tree.inorder()}
+  }`)
 
+  //Unbalance the tree
+  tree.insert(getRandomInt(100, 500));
+  tree.insert(getRandomInt(100, 500));
+  tree.insert(getRandomInt(100, 500));
+  tree.insert(getRandomInt(100, 500));
+  tree.insert(getRandomInt(100, 500));
+  tree.insert(getRandomInt(100, 500));
+  tree.insert(getRandomInt(100, 500));
 
+  console.log(`Data has been added to unbalance tree`)
+  console.log(`If "False", the tree is now unbalanced: ${tree.isBalanced()}`)
+  prettyPrint(tree.root);
 
-// console.log(tree.levelOrder())
-// console.log(`inorder: ${tree.inorder()}`)
-// console.log(`preorder: ${tree.preorder()}`)
-// console.log(`postorder: ${tree.postorder()}`)
+  console.log(`Rebalancing Tree`)
+  tree.rebalance()
 
-console.log(tree.height(tree.root))
-console.log('depth: ' + tree.depth(tree.root))
+  console.log(`If "True", the tree is now rebalanced: ${tree.isBalanced()}`)
+  prettyPrint(tree.root);
+  console.log(`traversal orders {
+    preorder: ${tree.preorder()},
+    postorder: ${tree.postorder()},
+    inorder: ${tree.inorder()}
+  }`)
 
-console.log(tree.isBalanced());
+}
 
-tree.rebalance();
-
-
-prettyPrint(tree.root);
+driverScript();
 
 
 
