@@ -189,7 +189,9 @@ class Tree {
   }
 
   rebalance() {
-
+    let array = this.preorder();
+    this.array = deleteDupe(array.sort((a, b) => a - b));
+    this.root = buildTree(array, 0, array.length - 1);
   }
 
 }
@@ -254,6 +256,12 @@ tree.delete(8);
 tree.delete(9);
 tree.delete(23);
 
+//making tree unbalanced
+tree.delete(324);
+tree.delete(6345);
+
+
+
 // console.log(tree.levelOrder())
 // console.log(`inorder: ${tree.inorder()}`)
 // console.log(`preorder: ${tree.preorder()}`)
@@ -263,6 +271,8 @@ console.log(tree.height(tree.root))
 console.log('depth: ' + tree.depth(tree.root))
 
 console.log(tree.isBalanced());
+
+tree.rebalance();
 
 
 prettyPrint(tree.root);
